@@ -19,6 +19,7 @@ jobs:
       - name: Comment a pull_request
         uses: peter-evans/create-or-update-comment@v2
         with:
+          issue-number: ${{ github.event.pull_request.number }}
           body: |
              "Hello, Thank you for this PR!"
           reactions: "+1, -1, laugh, confused, heart, hooray, rocket, eyes"
