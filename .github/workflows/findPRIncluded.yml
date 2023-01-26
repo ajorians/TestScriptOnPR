@@ -27,7 +27,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          ./prsSinceCommit.ps1 -RepoName MathPuzzleSolver -CommitHash 939ee2f7871f6311a20b8bc590411d4e8575bd2d >> $GITHUB_OUTPUT
+          echo "{prs_output}=$(./prsSinceCommit.ps1 -RepoName MathPuzzleSolver -CommitHash 939ee2f7871f6311a20b8bc590411d4e8575bd2d)" >> $GITHUB_OUTPUT
 
       - name: Comment a pull_request
         if: ${{ steps.regex-match.outputs.match != '' }}
@@ -35,7 +35,7 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-             "${{ steps.prssincecommit.GITHUB_OUTPUT }} as well as ${{ steps.regex-match.outputs.group1 }}, ${{ steps.regex-match.outputs.group2 }}"
+             "${{ steps.prssincecommit.outputs.prs_output }} as well as ${{ steps.regex-match.outputs.group1 }}, ${{ steps.regex-match.outputs.group2 }}"
           reactions: "+1, -1, laugh, confused, heart, hooray, rocket, eyes"
           
 permissions:
