@@ -22,6 +22,7 @@ jobs:
             echo "Match is ${{ steps.regex-match.outputs.match }}"
             
       - name: Run PowerShell script
+        id: prssincecommit
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
@@ -34,7 +35,7 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-             "${{ GITHUB_OUTPUT }} as well as ${{ steps.regex-match.outputs.group1 }}, ${{ steps.regex-match.outputs.group2 }}"
+             "${{ steps.prssincecommit.GITHUB_OUTPUT }} as well as ${{ steps.regex-match.outputs.group1 }}, ${{ steps.regex-match.outputs.group2 }}"
           reactions: "+1, -1, laugh, confused, heart, hooray, rocket, eyes"
           
 permissions:
