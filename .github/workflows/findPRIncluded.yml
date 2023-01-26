@@ -17,11 +17,12 @@ jobs:
           regex: 'Bump CommonCpp from `(.......)` to `(.......)`'
 
       - name: Comment a pull_request
+        if: ${{ steps.regex-match.outputs.match != '' }}
         uses: peter-evans/create-or-update-comment@v2
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-             "Hello, Thank you for this PR!"
+             "Updating from ${{ steps.regex-match.outputs.group1 }} to ${{ steps.regex-match.outputs.group2 }}"
           reactions: "+1, -1, laugh, confused, heart, hooray, rocket, eyes"
           
 permissions:
