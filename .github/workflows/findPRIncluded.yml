@@ -34,7 +34,7 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-             "Updating from ${{ steps.regex-match.outputs.group1 }} to ${{ steps.regex-match.outputs.group2 }}"
+             "${{ GITHUB_OUTPUT }} as well as ${{ steps.regex-match.outputs.group1 }}, ${{ steps.regex-match.outputs.group2 }}"
           reactions: "+1, -1, laugh, confused, heart, hooray, rocket, eyes"
           
 permissions:
