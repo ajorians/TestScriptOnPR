@@ -16,7 +16,7 @@ param (
     $FindRisk
 )
 
-$OwnerRepo = "TechSmith/$RepoName"
+$OwnerRepo = "ajorians/$RepoName"
 
 #Write-Output "REPO = $RepoName"
 
@@ -45,7 +45,7 @@ organization(login: `$org)
 }
 "@
 
-    $Json = gh api graphql -F org=TechSmith -F repo=$ClientRepo -f query="$GRAPHQL_QUERY" | ConvertFrom-Json
+    $Json = gh api graphql -F org=ajorians -F repo=$ClientRepo -f query="$GRAPHQL_QUERY" | ConvertFrom-Json
 
     $SubmodInfo = $Json.data.organization.repository.submodules.nodes | Where-Object { $_.name -eq "$SubmoduleName" }
 
