@@ -15,6 +15,11 @@ jobs:
         with:
           text: ${{ github.event.title }}
           regex: 'Bump CommonCpp from `(.......)` to `(.......)`'
+          
+      - name: Debugging Stuff
+        run: |
+            echo "${{ github.event.title }}"
+            echo "Match is ${{ steps.regex-match.outputs.match }}"
 
       - name: Comment a pull_request
         if: ${{ steps.regex-match.outputs.match != '' }}
