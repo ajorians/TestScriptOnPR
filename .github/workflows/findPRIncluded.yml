@@ -17,7 +17,7 @@ jobs:
           regex: 'Bump CommonCpp from `(.......)` to `(.......)`'
 
       - name: Comment a pull_request
-              uses: mb2dev/github-action-comment-pull-request@1.0.0
-              with:
-                message: "Hello, Thank you for this PR!"
-                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: mb2dev/github-action-comment-pull-request@1.0.0
+        with:
+          message: "Hello, Thank you for this PR!"
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
