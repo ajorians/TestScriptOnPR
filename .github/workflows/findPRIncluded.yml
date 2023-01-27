@@ -7,9 +7,6 @@ jobs:
   get_prs:
     runs-on: ubuntu-latest
     steps:
-#      - name: Checkout
-#        uses: actions/checkout@v3
-
       - uses: actions-ecosystem/action-regex-match@v2
         id: regex-match
         with:
@@ -27,6 +24,7 @@ jobs:
             
       - name: Run PowerShell script
         id: prssincecommit
+        if: ${{ steps.regex-match.outputs.match != '' }}
         shell: pwsh
         env:
           GH_TOKEN: ${{ github.token }}
