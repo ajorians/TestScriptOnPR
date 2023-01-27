@@ -11,7 +11,7 @@ jobs:
       - uses: actions-ecosystem/action-regex-match@v2
         id: regex-match
         with:
-          text: ${{ github.event.pull_request.title }}
+          text: "Bump CommonCpp from `74bc9b4` to `ff001b1`"
           regex: 'Bump CommonCpp from `(.......)` to `(.......)`'
           
       - name: Get PRsSinceCommit File
