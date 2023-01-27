@@ -18,7 +18,7 @@ jobs:
           
       - name: Get PRsSinceCommit File
         env:
-          TOKEN: ${{ github.token }}
+          TOKEN: ${{ github.GHTOKEN }}
         run: |
           curl -H "Authorization: token ${TOKEN}" https://raw.githubusercontent.com/TechSmith/prs-merged-since-commit/main/prsSinceCommit.ps1
           
