@@ -17,10 +17,8 @@ jobs:
           regex: 'Bump CommonCpp from `(.......)` to `(.......)`'
           
       - name: Get PRsSinceCommit File
-        env:
-          TOKEN: ${{ github.GHTOKEN }}
         run: |
-          curl -H "Authorization: token ${TOKEN}" https://raw.githubusercontent.com/TechSmith/prs-merged-since-commit/main/prsSinceCommit.ps1
+          curl -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" -O https://raw.githubusercontent.com/TechSmith/prs-merged-since-commit/main/prsSinceCommit.ps1
           
       - name: Debugging Stuff
         run: |
