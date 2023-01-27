@@ -27,7 +27,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           echo "A.J. here.  This is an automated comment. :smiley:" > output.txt
-          ./prsSinceCommit.ps1 -RepoName CommonCpp -CommitHash ${{ steps.regex-match.outputs.group1 }} -EndCommitHash ${{ steps.regex-match.outputs.group2 }} >> output.txt
+          ./prsSinceCommit.ps1 -RepoName "CommonCpp" -CommitHash "${{ steps.regex-match.outputs.group1 }}" -EndCommitHash "${{ steps.regex-match.outputs.group2 }}" >> output.txt
 
       - name: Comment a pull_request
         if: ${{ steps.regex-match.outputs.match != '' }}
