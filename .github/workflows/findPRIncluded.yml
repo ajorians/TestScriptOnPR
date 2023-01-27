@@ -17,7 +17,7 @@ jobs:
       - name: Get PRsSinceCommit File
         if: ${{ steps.regex-match.outputs.match != '' }}
         run: |
-          curl -H "Authorization: token ${{ secrets.GHTOKEN }}" -O https://raw.githubusercontent.com/TechSmith/prs-merged-since-commit/main/prsSinceCommit.ps1
+          curl -H "Authorization: token ${{ secrets.GHTOKEN }}" -O https://raw.githubusercontent.com/ajorians/TestScriptOnPR/master/prsSinceCommit.ps1
 
       - name: Run PowerShell script
         id: prssincecommit
