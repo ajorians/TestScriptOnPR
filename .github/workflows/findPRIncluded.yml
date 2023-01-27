@@ -7,14 +7,20 @@ jobs:
   get_prs:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+#      - name: Checkout
+#        uses: actions/checkout@v3
 
       - uses: actions-ecosystem/action-regex-match@v2
         id: regex-match
         with:
           text: ${{ github.event.pull_request.title }}
           regex: 'Bump CommonCpp from `(.......)` to `(.......)`'
+          
+      - name: Get PRsSinceCommit File
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          curl -H "Authorization: token ${TOKEN}" https://raw.githubusercontent.com/TechSmith/prs-merged-since-commit/main/prsSinceCommit.ps1
           
       - name: Debugging Stuff
         run: |
