@@ -2,6 +2,7 @@ name: Get PRs Included
 
 on:
   pull_request:
+    types: [opened, reopened]
 
 jobs:
   get_prs:
@@ -14,14 +15,10 @@ jobs:
           regex: 'Bump CommonCpp from `(.......)` to `(.......)`'
           
       - name: Get PRsSinceCommit File
+        if: ${{ steps.regex-match.outputs.match != '' }}
         run: |
           curl -H "Authorization: token ${{ secrets.GHTOKEN }}" -O https://raw.githubusercontent.com/TechSmith/prs-merged-since-commit/main/prsSinceCommit.ps1
-          
-      - name: Debugging Stuff
-        run: |
-            echo "${{ github.event.pull_request.title }}"
-            echo "Match is ${{ steps.regex-match.outputs.match }} with ${{ steps.regex-match.outputs.group1 }}, ${{ steps.regex-match.outputs.group2 }}"
-            
+
       - name: Run PowerShell script
         id: prssincecommit
         if: ${{ steps.regex-match.outputs.match != '' }}
@@ -30,7 +27,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           echo "A.J. here.  This is an automated comment. :smiley:" > output.txt
-          ./prsSinceCommit.ps1 -RepoName MathPuzzleSolver -CommitHash 939ee2f7871f6311a20b8bc590411d4e8575bd2d >> output.txt
+          ./prsSinceCommit.ps1 -RepoName CommonCpp -CommitHash ${{ steps.regex-match.outputs.group1 }} -EndCommitHash ${{ steps.regex-match.outputs.group2 }} >> output.txt
 
       - name: Comment a pull_request
         if: ${{ steps.regex-match.outputs.match != '' }}
@@ -39,7 +36,7 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           body-file: output.txt
           reactions: "laugh, heart, hooray, rocket"
-          
+
 permissions:
   contents: read
   pull-requests: write
