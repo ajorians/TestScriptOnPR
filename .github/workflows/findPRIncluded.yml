@@ -24,7 +24,7 @@ jobs:
         if: ${{ steps.regex-match.outputs.match != '' }}
         shell: pwsh
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GHTOKEN }}
         run: |
           echo "A.J. here.  This is an automated comment. :smiley:" > output.txt
           ./prsSinceCommit.ps1 -RepoName "CommonCpp" -CommitHash "${{ steps.regex-match.outputs.group1 }}" -EndCommitHash "${{ steps.regex-match.outputs.group2 }}" >> output.txt
