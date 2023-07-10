@@ -19,6 +19,7 @@ jobs:
         with:
           repository: TechSmith/prs-merged-since-commit
           token: ${{ secrets.GHTOKEN }}
+          path: './prs-merged-since-commit'
 
       - name: Run PowerShell script
         id: prssincecommit
@@ -27,8 +28,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GHTOKEN }}
         run: |
+          ls
+          ls prs-merged-since-commit
+          cp prs-merged-since-commit/prsSinceCommit.ps1 .
           echo "A.J. here.  This is an automated comment. :smiley:" > output.txt
-          ./prs-merged-since-commit/prsSinceCommit.ps1 -RepoName "CommonCpp" -CommitHash "${{ steps.regex-match.outputs.group1 }}" -EndCommitHash "${{ steps.regex-match.outputs.group2 }}" >> output.txt
+          ./prsSinceCommit.ps1 -RepoName "CommonCpp" -CommitHash "${{ steps.regex-match.outputs.group1 }}" -EndCommitHash "${{ steps.regex-match.outputs.group2 }}" >> output.txt
 
       - name: Comment a pull_request
         if: ${{ steps.regex-match.outputs.match != '' }}
