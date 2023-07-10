@@ -13,11 +13,12 @@ jobs:
         with:
           text: "Bump CommonCpp from `74bc9b4` to `ff001b1`"
           regex: 'Bump CommonCpp from `(.......)` to `(.......)`'
-          
-      - name: Get PRsSinceCommit File
-        if: ${{ steps.regex-match.outputs.match != '' }}
-        run: |
-          curl -H "Authorization: token ${{ secrets.GHTOKEN }}" -O https://raw.githubusercontent.com/ajorians/TestScriptOnPR/master/prsSinceCommit.ps1
+      
+      - name: Check out repo with script
+        uses: actions/checkout@master
+        with:
+          repository: TechSmith/prs-merged-since-commit
+          token: ${{ secrets.GHTOKEN }}
 
       - name: Run PowerShell script
         id: prssincecommit
@@ -27,7 +28,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GHTOKEN }}
         run: |
           echo "A.J. here.  This is an automated comment. :smiley:" > output.txt
-          ./prsSinceCommit.ps1 -RepoName "CommonCpp" -CommitHash "${{ steps.regex-match.outputs.group1 }}" -EndCommitHash "${{ steps.regex-match.outputs.group2 }}" >> output.txt
+          ./prs-merged-since-commit/prsSinceCommit.ps1 -RepoName "CommonCpp" -CommitHash "${{ steps.regex-match.outputs.group1 }}" -EndCommitHash "${{ steps.regex-match.outputs.group2 }}" >> output.txt
 
       - name: Comment a pull_request
         if: ${{ steps.regex-match.outputs.match != '' }}
